@@ -17,10 +17,6 @@ public class CellService {
         this.cellRepository = cellRepository;
     }
 
-    public void saveAll(List<Cell> cells) {
-        cellRepository.saveAll(cells);
-    }
-
     public Optional<Cell> findByRowAndCol(Long boardId, int row, int col) {
         return cellRepository.findByBoardIdAndRowAndCol(boardId, row, col);
     }

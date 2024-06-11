@@ -1,5 +1,6 @@
 package com.tringuyen.minesweeper.service;
 
+import com.tringuyen.minesweeper.controller.BoardController;
 import com.tringuyen.minesweeper.model.Board;
 import com.tringuyen.minesweeper.model.Cell;
 import com.tringuyen.minesweeper.repository.BoardRepository;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,6 +21,8 @@ public class BoardService {
                                                                new int[] {1, -1},
                                                                new int[] {1, 0},
                                                                new int[] {1, 1});
+
+    private static final Logger LOGGER = Logger.getLogger(BoardService.class.getName());
     private final BoardRepository boardRepository;
     private final CellService cellService;
 
@@ -30,14 +34,17 @@ public class BoardService {
 
     public Board build(int rows, int cols, int mines) {
         if(rows <= 0 || cols <= 0) {
+            LOGGER.severe("Board dimensions must be greater than 0");
             throw new IllegalArgumentException("Board dimensions must be greater than 0");
         }
 
         if(mines <= 0) {
+            LOGGER.severe("Number of mines must be greater than 0");
             throw new IllegalArgumentException("Number of mines must be greater than 0");
         }
 
         if(mines >= rows * cols) {
+            LOGGER.severe("Number of mines exceeds the board size");
             throw new IllegalArgumentException("Number of mines exceeds the board size");
         }
 
@@ -60,18 +67,22 @@ public class BoardService {
 
     public Board initializeMines(Board board, int row, int col) {
         if(!board.isValidPosition(row, col)) {
+            LOGGER.severe("Invalid starting position");
             throw new IllegalArgumentException("Invalid starting position");
         }
 
         if(board.getRows() <= 0 || board.getCols() <= 0) {
+            LOGGER.severe("Board dimensions must be greater than 0");
             throw new IllegalArgumentException("Board dimensions must be greater than 0");
         }
 
         if(board.getMines() <= 0) {
+            LOGGER.severe("Number of mines must be greater than 0");
             throw new IllegalArgumentException("Number of mines must be greater than 0");
         }
 
         if(board.getMines() >= board.getRows() * board.getCols()) {
+            LOGGER.severe("Number of mines exceeds the board size");
             throw new IllegalArgumentException("Number of mines exceeds the board size");
         }
 
@@ -139,6 +150,7 @@ public class BoardService {
 
     public Board toggleFlag(Board board, int row, int col) {
         if(!board.isValidPosition(row, col)) {
+            LOGGER.severe("Invalid cell position");
             throw new IllegalArgumentException("Invalid cell position");
         }
 

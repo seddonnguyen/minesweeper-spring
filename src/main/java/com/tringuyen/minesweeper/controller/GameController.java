@@ -6,9 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @Controller
 @RequestMapping("/game")
 public class GameController {
+    private static final Logger LOGGER = Logger.getLogger(GameController.class.getName());
     private final String username = "admin";
     private final GameService gameService;
 

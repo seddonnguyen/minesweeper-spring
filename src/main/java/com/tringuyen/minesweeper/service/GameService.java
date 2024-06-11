@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.logging.Logger;
 
 @Service
 public class GameService {
 
+    private static final Logger LOGGER = Logger.getLogger(GameService.class.getName());
     private final GameRepository gameRepository;
     private final UserRepository userRepository;
     private final BoardService boardService;
@@ -29,10 +31,17 @@ public class GameService {
     public Game create(String username, String difficulty) {
         Optional<User> user = userRepository.findByUsername(username);
         if(user.isEmpty()) {
+            LOGGER.severe("User not found: " + username);
             throw new ResourceNotFoundException("User", "username", username);
         }
 
         Difficulty diff = Difficulty.valueOfName(difficulty);
+
+        if(diff == null) {
+            LOGGER.severe("Invalid difficulty: " + difficulty);
+            throw new IllegalArgumentException("Invalid difficulty: " + difficulty);
+        }
+
         Board board = boardService.build(diff.getRows(), diff.getCols(), diff.getMines());
         Game game = new Game();
         game.setGameNew();
@@ -45,33 +54,50 @@ public class GameService {
     }
 
     public Game getGame(String username, Long gameId) {
-        Game game = gameRepository.findById(gameId)
-                                  .orElseThrow(() -> new ResourceNotFoundException("Game", "id", gameId));
+        Optional<Game> gameOptional = gameRepository.findById(gameId);
+        if(gameOptional.isEmpty()) {
+            LOGGER.severe("Game not found: " + gameId);
+            throw new ResourceNotFoundException("Game", "id", gameId);
+        }
+
+        Game game = gameOptional.get();
         if(!game.getUser()
                 .getUsername()
                 .equals(username)) {
+            LOGGER.severe("Unauthorized access for User: " + username);
             throw new RuntimeException("Unauthorized access for User: " + username);
         }
         return game;
     }
 
     public void deleteGame(String username, Long gameId) {
-        Game game = gameRepository.findById(gameId)
-                                  .orElseThrow(() -> new ResourceNotFoundException("Game", "id", gameId));
+        Game game = getGame(gameId);
+
         if(!game.getUser()
                 .getUsername()
                 .equals(username)) {
+            LOGGER.severe("Unauthorized access for User: " + username);
             throw new RuntimeException("Unauthorized access for User: " + username);
         }
         gameRepository.delete(game);
     }
 
+    private Game getGame(Long gameId) {
+        Optional<Game> gameOptional = gameRepository.findById(gameId);
+        if(gameOptional.isEmpty()) {
+            LOGGER.severe("Game not found: " + gameId);
+            throw new ResourceNotFoundException("Game", "id", gameId);
+        }
+        return gameOptional.get();
+    }
+
     public Game reveal(String username, Long gameId, int row, int col) {
-        Game game = gameRepository.findById(gameId)
-                                  .orElseThrow(() -> new ResourceNotFoundException("Game", "id", gameId));
+        Game game = getGame(gameId);
+
         if(!game.getUser()
                 .getUsername()
                 .equals(username)) {
+            LOGGER.severe("Unauthorized access for User: " + username);
             throw new RuntimeException("Unauthorized access for User: " + username);
         }
 
@@ -103,6 +129,7 @@ public class GameService {
         Board board = game.getBoard();
 
         if(!board.isValidPosition(row, col)) {
+            LOGGER.severe("Invalid starting position");
             throw new IllegalArgumentException("Invalid starting position");
         }
 
@@ -112,11 +139,12 @@ public class GameService {
     }
 
     public Game flag(String username, Long gameId, int row, int col) {
-        Game game = gameRepository.findById(gameId)
-                                  .orElseThrow(() -> new ResourceNotFoundException("Game", "id", gameId));
+        Game game = getGame(gameId);
+
         if(!game.getUser()
                 .getUsername()
                 .equals(username)) {
+            LOGGER.severe("Unauthorized access for User: " + username);
             throw new RuntimeException("Unauthorized access for User: " + username);
         }
 
