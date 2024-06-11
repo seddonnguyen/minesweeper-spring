@@ -60,7 +60,7 @@ public class Board {
         this.mineExploded = false;
     }
 
-    public int remainingMines() {
+    public Integer getRemainingMines() {
         return this.mines - this.flags;
     }
 
