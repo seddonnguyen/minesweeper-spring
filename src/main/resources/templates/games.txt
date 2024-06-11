@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Games</title>
+</head>
+<body>
+<h2>All Games</h2>
+<table>
+    <thead>
+    <tr>
+        <th>Game ID</th>
+        <th>Difficulty</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="game : ${games}">
+        <td th:text="${game.id}"></td>
+        <td th:text="${game.difficulty}"></td>
+        <td th:text="${game.gameOver ? (game.won ? 'Won' : 'Lost') : 'In Progress'}"></td>
+        <td><a th:href="@{/game/{gameId}(gameId=${game.id})}">View</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
