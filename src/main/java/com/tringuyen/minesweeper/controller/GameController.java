@@ -5,8 +5,10 @@ import com.tringuyen.minesweeper.payload.request.ElapsedTimeRequest;
 import com.tringuyen.minesweeper.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 @Controller
@@ -21,6 +23,12 @@ public class GameController {
     @PostMapping
     public ResponseEntity<Game> startGame(@RequestParam("difficulty") String difficulty) {
         return ResponseEntity.ok(gameService.create(username, difficulty));
+    }
+
+    @GetMapping
+    public String getActiveGame(Model model) {
+        model.addAttribute("games", gameService.getActiveGame(username));
+        return "games";
     }
 
     @GetMapping("/{gameId}")

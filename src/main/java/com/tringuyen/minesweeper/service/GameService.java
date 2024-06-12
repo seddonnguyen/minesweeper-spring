@@ -1,15 +1,14 @@
 package com.tringuyen.minesweeper.service;
 
-import com.tringuyen.minesweeper.model.Board;
-import com.tringuyen.minesweeper.model.Difficulty;
-import com.tringuyen.minesweeper.model.Game;
-import com.tringuyen.minesweeper.model.User;
+import com.tringuyen.minesweeper.model.*;
 import com.tringuyen.minesweeper.exception.ResourceNotFoundException;
 import com.tringuyen.minesweeper.repository.GameRepository;
 import com.tringuyen.minesweeper.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
 
@@ -138,6 +137,15 @@ public class GameService {
         game.setGameInProgress();
         boardService.initializeMines(board, row, col);
         return gameRepository.save(game);
+    }
+
+    public List<Game> getActiveGame(String username) {
+        Optional<User> user = userRepository.findByUsername(username);
+        if(user.isEmpty()) {
+            LOGGER.severe("User not found: " + username);
+            throw new ResourceNotFoundException("User", "username", username);
+        }
+        return gameRepository.findByUserAndGameStates(user.get(), List.of(GameState.NEW, GameState.IN_PROGRESS));
     }
 
     public Game flag(String username, Long gameId, int row, int col) {

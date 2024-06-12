@@ -12,13 +12,6 @@ import java.util.Optional;
 
 @Repository
 public interface CellRepository extends JpaRepository<Cell, Long> {
-
     @Query("SELECT c FROM Cell c WHERE c.board.id = :boardId AND c.row = :row AND c.col = :col")
     Optional<Cell> findByBoardIdAndRowAndCol(@Param("boardId") Long boardId, @Param("row") int row, @Param("col") int col);
-
-    @Query("SELECT c FROM Cell c WHERE c.board.id = :boardId AND c.state = :state")
-    Optional<List<Cell>> findByBoardIdAndState(@Param("boardId") Long boardId, @Param("state") CellState state);
-
-    @Query("SELECT c FROM Cell c WHERE c.board.id = :boardId AND c.isMine = true")
-    Optional<List<Cell>> findMineByBoardId(@Param("boardId") Long boardId);
 }

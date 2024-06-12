@@ -9,20 +9,24 @@
 <table>
     <thead>
     <tr>
-        <th>Game ID</th>
         <th>Difficulty</th>
         <th>Status</th>
+        <th>Last Played</th>
         <th>Action</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="game : ${games}">
-        <td th:text="${game.id}"></td>
         <td th:text="${game.difficulty}"></td>
-        <td th:text="${game.gameOver ? (game.won ? 'Won' : 'Lost') : 'In Progress'}"></td>
-        <td><a th:href="@{/game/{gameId}(gameId=${game.id})}">View</a></td>
+        <td th:text="${game.state == 'NEW' ? 'New Game' : 'In Progress'}"></td>
+        <td th:text="${game.endDate}"></td>
+        <td>
+            <button th:onclick="'location.href=\'/game/' + ${game.id} + '\';'">Play</button>
+            <button th:onclick="'deleteGame(' + ${game.id} + ');'">Delete</button>
+        </td>
     </tr>
     </tbody>
+    <script th:src="@{/js/games.js}"></script>
 </table>
 </body>
 </html>
