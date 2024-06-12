@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const initSounds = async () => {
+        sounds.startGame = await loadSound('sounds/start-game.mp3');
         sounds.explosion = await loadSound('sounds/explosion.mp3');
         sounds.smallExplosion = await loadSound('sounds/small-explosion.mp3');
         sounds.victory = await loadSound('sounds/victory.mp3');
@@ -330,7 +331,7 @@ document.addEventListener('DOMContentLoaded', () => {
             game = gameData;
             board = gameData.board;
             cells = board.cells;
-            playSound(sounds.select);
+            playSound(sounds.startGame);
             setupGame();
         });
     });
@@ -353,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 game = gameData;
                 board = gameData.board;
                 cells = board.cells;
-                playSound(sounds.select);
+                playSound(sounds.startGame);
                 setupGame();
             });
         });
