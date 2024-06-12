@@ -1,7 +1,7 @@
 package com.tringuyen.minesweeper.controller;
 
-import com.tringuyen.minesweeper.service.GameService;
 import com.tringuyen.minesweeper.model.Game;
+import com.tringuyen.minesweeper.service.GameService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +41,12 @@ public class GameController {
 
     @PutMapping("/{gameId}/flag")
     public ResponseEntity<Game> flag(@PathVariable("gameId") Long gameId, @RequestParam int row, @RequestParam int col) {
-        return ResponseEntity.ok(gameService.flag(username, gameId, row, col));
+        Game game = gameService.flag(username, gameId, row, col);
+        if(!game.isGameInProgress()) {
+            return ResponseEntity.noContent()
+                                 .build();
+        }
+
+        return ResponseEntity.ok(game);
     }
 }

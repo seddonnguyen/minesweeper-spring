@@ -101,6 +101,8 @@ public class GameService {
             throw new RuntimeException("Unauthorized access for User: " + username);
         }
 
+        if(game.isGameOver()) { return null; }
+
         if(game.isGameNew()) {
             game = populateMines(game, row, col);
         }
@@ -148,7 +150,7 @@ public class GameService {
             throw new RuntimeException("Unauthorized access for User: " + username);
         }
 
-        if(game.isGameNew()) { return game; }
+        if(!game.isGameInProgress()) { return game; }
 
         Board board = boardService.toggleFlag(game.getBoard(), row, col);
         game.setBoard(board);
