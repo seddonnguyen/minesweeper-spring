@@ -72,6 +72,16 @@ document.addEventListener('DOMContentLoaded', () => {
         return await response.json();
     }
 
+    async function deleteGame(id) {
+        const response = await fetch(`/game/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    }
+
     async function reveal(id, row, col) {
         const response = await fetch(`/game/${id}/reveal?row=${row}&col=${col}`, {
             method: 'PUT', headers: {
@@ -316,11 +326,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Event listeners for buttons
     playButton.addEventListener('click', () => {
-        playSound(sounds.select);
         createGame(difficulty.value).then((gameData) => {
             game = gameData;
             board = gameData.board;
             cells = board.cells;
+            playSound(sounds.select);
             setupGame();
         });
     });
@@ -338,12 +348,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     restartButton.addEventListener('click', () => {
-        playSound(sounds.select);
-        createGame(difficulty.value).then((gameData) => {
-            game = gameData;
-            board = gameData.board;
-            cells = board.cells;
-            setupGame();
+        deleteGame(game.id).then(() => {
+            createGame(difficulty.value).then((gameData) => {
+                game = gameData;
+                board = gameData.board;
+                cells = board.cells;
+                playSound(sounds.select);
+                setupGame();
+            });
         });
     });
 
