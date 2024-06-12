@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" th:href="@{/css/difficulty.css}">
+</head>
+<body>
+
+<div class="screen" id="startScreen">
+    <h1>Minesweeper</h1>
+    <div id="instructions">
+        <select id="difficulty">
+            <option th:each="difficulty : ${difficulties}"
+                    th:text="${difficulty}"
+                    th:value="${difficulty}">Difficulty
+            </option>
+        </select>
+        <button id="playButton">Play</button>
+    </div>
+</div>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var gameData = /*[[${game}]]*/ {};
+    var mineImgSrc = /*[[@{/images/mine.svg}]]*/ '';
+    var flagImgSrc = /*[[@{/images/flag.svg}]]*/ '';
+    var invalidImgSrc = /*[[@{/images/invalid.svg}]]*/ '';
+    var startGameSoundSrc = /*[[@{/sounds/start-game.mp3}]]*/ '';
+    var explosionSoundSrc = /*[[@{/sounds/explosion.mp3}]]*/ '';
+    var smallExplosionSoundSrc = /*[[@{/sounds/small-explosion.mp3}]]*/ '';
+    var victorySoundSrc = /*[[@{/sounds/victory.mp3}]]*/ '';
+    var flagSoundSrc = /*[[@{/sounds/flag.mp3}]]*/ '';
+    var openSoundSrc = /*[[@{/sounds/open.mp3}]]*/ '';
+    var selectSoundSrc = /*[[@{/sounds/select.mp3}]]*/ '';
+    var closeSoundSrc = /*[[@{/sounds/close.mp3}]]*/ '';
+    /*]]>*/
+</script>
+<script th:src="@{/js/difficulty.js}" type="module"></script>
+</body>
+</html>
