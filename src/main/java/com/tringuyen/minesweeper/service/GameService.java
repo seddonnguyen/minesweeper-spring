@@ -156,4 +156,16 @@ public class GameService {
         game.setBoard(board);
         return gameRepository.save(game);
     }
+
+    public void updateElapsedTime(String username, Long gameId, Long seconds) {
+        Game game = getGame(gameId);
+
+        if(!game.getUser()
+                .getUsername()
+                .equals(username)) {
+            LOGGER.severe("Unauthorized access for User: " + username);
+            throw new RuntimeException("Unauthorized access for User: " + username);
+        }
+        gameRepository.updateElapsedTime(gameId, seconds);
+    }
 }

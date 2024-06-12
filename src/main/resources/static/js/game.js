@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let startTime;
     let timerInterval;
     let elapsedTimeString;
+    let elapsedTimeInSeconds;
 
     // Setup Web Audio API
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -58,7 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sounds.close = await loadSound('sounds/close.mp3');
     };
 
-    initSounds();
+    initSounds().catch(console.error);
 
     async function createGame(difficulty) {
         const response = await fetch(`/game?difficulty=${difficulty}`, {
@@ -125,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cell && !cell.hidden) {return;}
 
         try {
-
             reveal(game.id, row, col).then((gameData) => {
                 if (gameData === null) {return;}
                 game = gameData;
@@ -135,7 +135,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 playSound(findCell(row, col).exploded ? sounds.smallExplosion : sounds.open);
                 updateGameStatus();
                 drawBoard();
-
 
                 if (game.gameLost) {
                     endGame();
@@ -203,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
         canvas.width = cellSize * cols;
         canvas.height = cellSize * rows;
         startTime = new Date().getTime();
+        elapsedTimeInSeconds = game.elapsedTimeInSeconds;
 
         startScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
@@ -270,9 +270,24 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    async function updateElapsedTime(id, elapsedTimeInSeconds) {
+        const response = await fetch(`/game/${id}/mark`, {
+            method: 'PUT', headers: {
+                'Content-Type': 'application/json'
+            }, body: JSON.stringify({elapsedTimeInSeconds})
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    }
+
     function getElapsedTime() {
         const timeDiff = new Date().getTime() - startTime;
-        const totalSeconds = Math.floor(timeDiff / 1000);
+        const totalSeconds = Math.floor(timeDiff / 1000) + elapsedTimeInSeconds;
+
+        updateElapsedTime(game.id, totalSeconds).catch(console.error)
+
         const minutes = Math.floor(totalSeconds / 60);
         const seconds = totalSeconds % 60;
 

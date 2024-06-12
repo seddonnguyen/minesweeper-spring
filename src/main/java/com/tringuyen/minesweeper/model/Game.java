@@ -45,10 +45,14 @@ public class Game {
     @NonNull
     private Date endDate;
 
+    @NonNull
+    private Long elapsedTimeInSeconds;
+
     @PrePersist
     public void prePersist() {
         this.startDate = new Date();
         this.endDate = new Date();
+        this.elapsedTimeInSeconds = 0L;
     }
 
     @PreUpdate
