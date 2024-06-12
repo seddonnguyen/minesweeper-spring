@@ -18,7 +18,7 @@
     <tbody>
     <tr th:each="game : ${games}">
         <td th:text="${game.difficulty}"></td>
-        <td th:text="${game.state == 'NEW' ? 'New Game' : 'In Progress'}"></td>
+        <td th:text="${game.gameNew ? 'New Game' : (game.gameInProgress ? 'In Progress' : (game.gameWon ? 'Won' : 'Lost'))}"></td>
         <td th:text="${game.endDate}"></td>
         <td>
             <button th:onclick="'location.href=\'/game/' + ${game.id} + '\';'">Play</button>

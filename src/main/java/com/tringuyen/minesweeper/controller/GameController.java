@@ -30,10 +30,19 @@ public class GameController {
         model.addAttribute("games", gameService.getActiveGame(username));
         return "games";
     }
+/*
 
     @GetMapping("/{gameId}")
     public ResponseEntity<Game> getGame(@PathVariable("gameId") Long gameId) {
         return ResponseEntity.ok(gameService.getGame(username, gameId));
+    }
+*/
+
+    @GetMapping("/{gameId}")
+    public String getGame(@PathVariable("gameId") Long gameId, Model model) {
+        Game game = gameService.getGame(username, gameId);
+        model.addAttribute("game", game);
+        return "game";
     }
 
     @DeleteMapping("/{gameId}")

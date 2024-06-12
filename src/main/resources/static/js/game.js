@@ -1,30 +1,29 @@
 document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('gameCanvas');
     const context = canvas.getContext('2d');
-    const playButton = document.getElementById('playButton');
-    const difficulty = document.getElementById('difficulty');
+
     const gameScreen = document.getElementById('gameScreen');
-    const startScreen = document.getElementById('startScreen');
     const gameStatus = document.getElementById('gameStatus');
     const gameOverModal = document.getElementById('gameOverModal');
     const closeGameOverModal = document.getElementById('closeGameOverModal');
     const gameOverHeader = document.getElementById('gameOverHeader');
     const gameOverMessage = document.getElementById('gameOverMessage');
     const gameOverTime = document.getElementById('gameOverTime');
-    const newGameButton = document.getElementById('newGameButton');
+    const menuButton = document.getElementById('menuButton');
+    const menu2Button = document.getElementById('menu2Button');
     const restartButton = document.getElementById('restartButton');
-    const newLevelButton = document.getElementById('newLevelButton');
     const mineImg = new Image();
     const flagImg = new Image();
     const invalidImg = new Image();
 
-    mineImg.src = 'images/mine.svg';
-    flagImg.src = 'images/flag.svg';
-    invalidImg.src = 'images/invalid.svg';
+    // Use the injected paths
+    mineImg.src = mineImgSrc;
+    flagImg.src = flagImgSrc;
+    invalidImg.src = invalidImgSrc;
 
-    let game;
-    let board;
-    let cells;
+    let game = window.gameData;  // Retrieve the game data from the embedded JSON
+    let board = game ? game.board : null;
+    let cells = board ? board.cells : [];
     let cellSize;
     let startTime;
     let timerInterval;
@@ -37,7 +36,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const loadSound = (url) => {
         return fetch(url)
-            .then(response => response.arrayBuffer())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+                }
+                return response.arrayBuffer();
+            })
             .then(data => audioContext.decodeAudioData(data));
     };
 
@@ -49,19 +53,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const initSounds = async () => {
-        sounds.startGame = await loadSound('sounds/start-game.mp3');
-        sounds.explosion = await loadSound('sounds/explosion.mp3');
-        sounds.smallExplosion = await loadSound('sounds/small-explosion.mp3');
-        sounds.victory = await loadSound('sounds/victory.mp3');
-        sounds.flag = await loadSound('sounds/flag.mp3');
-        sounds.open = await loadSound('sounds/open.mp3');
-        sounds.select = await loadSound('sounds/select.mp3');
-        sounds.close = await loadSound('sounds/close.mp3');
+        try {
+            sounds.startGame = await loadSound(startGameSoundSrc);
+            sounds.explosion = await loadSound(explosionSoundSrc);
+            sounds.smallExplosion = await loadSound(smallExplosionSoundSrc);
+            sounds.victory = await loadSound(victorySoundSrc);
+            sounds.flag = await loadSound(flagSoundSrc);
+            sounds.open = await loadSound(openSoundSrc);
+            sounds.select = await loadSound(selectSoundSrc);
+            sounds.close = await loadSound(closeSoundSrc);
+        } catch (error) {
+            console.error('Error loading sounds:', error);
+        }
     };
 
-    initSounds().catch(console.error);
+    initSounds().then(() => {
+        if (game) {
+            playSound(sounds.startGame);
+            setupGame();
+        }
+    });
 
-    async function createGame(difficulty) {
+    async function newGame(difficulty) {
         const response = await fetch(`/game?difficulty=${difficulty}`, {
             method: 'POST', headers: {
                 'Content-Type': 'application/json'
@@ -74,7 +87,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return await response.json();
     }
 
-    async function deleteGame(id) {
+    async function removeGame(id) {
         const response = await fetch(`/game/${id}`, {
             method: 'DELETE'
         });
@@ -84,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    async function reveal(id, row, col) {
+    async function revealPosition(id, row, col) {
         const response = await fetch(`/game/${id}/reveal?row=${row}&col=${col}`, {
             method: 'PUT', headers: {
                 'Content-Type': 'application/json'
@@ -126,7 +139,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cell && !cell.hidden) {return;}
 
         try {
-            reveal(game.id, row, col).then((gameData) => {
+            revealPosition(game.id, row, col).then((gameData) => {
                 if (gameData === null) {return;}
                 game = gameData;
                 board = gameData.board;
@@ -204,14 +217,15 @@ document.addEventListener('DOMContentLoaded', () => {
         startTime = new Date().getTime();
         elapsedTimeInSeconds = game.elapsedTimeInSeconds;
 
-        startScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
         gameOverModal.classList.add('hidden');
+
         updateGameStatus();
         drawBoard();
+
         canvas.addEventListener('click', handleCanvasClick);
         canvas.addEventListener('contextmenu', handleCanvasRightClick);
-        startTimer();
+        if (!game.gameOver) {startTimer();}
     }
 
     function updateGameStatus() {
@@ -283,13 +297,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function getElapsedTime() {
+        if (game.gameOver) {return formatElapsedTime(game.elapsedTimeInSeconds);}
+
         const timeDiff = new Date().getTime() - startTime;
         const totalSeconds = Math.floor(timeDiff / 1000) + elapsedTimeInSeconds;
 
         updateElapsedTime(game.id, totalSeconds).catch(console.error)
+        return formatElapsedTime(totalSeconds);
+    }
 
-        const minutes = Math.floor(totalSeconds / 60);
-        const seconds = totalSeconds % 60;
+    function formatElapsedTime(elapsedTimeInSeconds) {
+        const minutes = Math.floor(elapsedTimeInSeconds / 60);
+        const seconds = elapsedTimeInSeconds % 60;
 
         return `${minutes.toString()
                          .padStart(2, '0')}:${seconds.toString()
@@ -341,15 +360,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Event listeners for buttons
-    playButton.addEventListener('click', () => {
-        createGame(difficulty.value).then((gameData) => {
-            game = gameData;
-            board = gameData.board;
-            cells = board.cells;
-            playSound(sounds.startGame);
-            setupGame();
-        });
+    menuButton.addEventListener('click', () => {
+        window.location.href = '/game';
+    });
+
+    menu2Button.addEventListener('click', () => {
+        window.location.href = '/game';
     });
 
     closeGameOverModal.addEventListener('click', () => {
@@ -357,28 +373,11 @@ document.addEventListener('DOMContentLoaded', () => {
         gameOverModal.classList.add('hidden');
     });
 
-    newGameButton.addEventListener('click', () => {
-        playSound(sounds.select);
-        gameOverModal.classList.add('hidden');
-        startScreen.classList.remove('hidden');
-        gameScreen.classList.add('hidden');
-    });
-
     restartButton.addEventListener('click', () => {
-        deleteGame(game.id).then(() => {
-            createGame(difficulty.value).then((gameData) => {
-                game = gameData;
-                board = gameData.board;
-                cells = board.cells;
-                playSound(sounds.startGame);
-                setupGame();
+        removeGame(game.id).then(() => {
+            newGame(game.difficulty).then((game) => {
+                location.replace('/game/' + game.id);
             });
         });
-    });
-
-    newLevelButton.addEventListener('click', () => {
-        playSound(sounds.select);
-        gameScreen.classList.add('hidden');
-        startScreen.classList.remove('hidden');
     });
 });
