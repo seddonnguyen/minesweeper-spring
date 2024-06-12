@@ -202,6 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         canvas.width = cellSize * cols;
         canvas.height = cellSize * rows;
+        startTime = new Date().getTime();
 
         startScreen.classList.add('hidden');
         gameScreen.classList.remove('hidden');
@@ -214,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateGameStatus() {
+        elapsedTimeString = getElapsedTime();
         gameStatus.innerHTML = `
             <div>Life: ${game.life}</div>
             <div>Cells Opened: ${board.revealed}</div>
@@ -289,7 +291,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function displayGameOverModal(header, message) {
-        elapsedTimeString = getElapsedTime();
         gameOverHeader.textContent = header;
         gameOverMessage.textContent = message;
         gameOverTime.textContent = `Time: ${elapsedTimeString}`;
