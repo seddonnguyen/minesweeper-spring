@@ -1,25 +1,45 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Register</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Minesweeper</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/register.css}">
 </head>
 <body>
-<h2>Register</h2>
-<form method="post" th:action="@{/auth/register}">
-    <div>
-        <label>Username:</label>
-        <input name="username" type="text"/>
+<main>
+    <div class="form-container">
+        <section class="form-section">
+            <h2>Register</h2>
+            <form id="registrationForm">
+                <div class="input-group">
+                    <label for="firstname"><i aria-hidden="true" class="fa fa-envelope"></i> First Name</label>
+                    <input id="firstname" name="firstname" required type="text">
+                </div>
+                <div class="input-group">
+                    <label for="lastname"><i aria-hidden="true" class="fa fa-envelope"></i> Last Name</label>
+                    <input id="lastname" name="lastname" required type="text">
+                </div>
+                <div class="input-group">
+                    <label for="email"><i aria-hidden="true" class="fa fa-envelope"></i> Email</label>
+                    <input id="email" name="email" required type="email">
+                </div>
+                <div class="input-group">
+                    <label for="username"><i aria-hidden="true" class="fa fa-envelope"></i> Username</label>
+                    <input id="username" name="username" required type="text">
+                </div>
+                <div class="input-group">
+                    <label for="password"><i class="fas fa-lock"></i> Password</label>
+                    <input id="password" name="password" placeholder="At least 6 characters" required type="password">
+                </div>
+                <button id="register">Register</button>
+            </form>
+            <p>Already have an account? <a th:href="@{/login}">Login</a></p>
+        </section>
     </div>
-    <div>
-        <label>Password:</label>
-        <input name="password" type="password"/>
-    </div>
-    <div th:if="${error}">
-        <p th:text="${error}"></p>
-    </div>
-    <button type="submit">Register</button>
-</form>
-<p>Already have an account? <a th:href="@{/auth/login}">Login</a></p>
+</main>
+<script th:src="@{/js/register.js}" type="module"></script>
 </body>
 </html>

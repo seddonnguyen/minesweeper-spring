@@ -52,12 +52,6 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         http.authenticationProvider(authenticationProvider());
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
-        http.formLogin(form -> form.loginPage("/login")
-                                   .permitAll()
-                                   .defaultSuccessUrl("/game")
-                                   .failureUrl("/login?error=true"))
-            .logout(logout -> logout.logoutUrl("/"));
         return http.build();
     }
 
