@@ -1,7 +1,6 @@
 package com.tringuyen.minesweeper.repository;
 
 import com.tringuyen.minesweeper.model.Game;
-import com.tringuyen.minesweeper.model.GameState;
 import com.tringuyen.minesweeper.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

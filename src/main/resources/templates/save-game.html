@@ -27,7 +27,7 @@
             <tr th:each="game : ${games}">
                 <td th:text="${#strings.capitalize(#strings.toLowerCase(game.difficulty))}"></td>
                 <td th:text="${game.gameNew ? 'New Game' : (game.gameInProgress ? 'In Progress' : (game.gameWon ? 'Won' : 'Lost'))}"></td>
-                <td th:text="${#dates.format(game.endDate, 'dd-MM-yyyy HH:mm:ss')}"></td>
+                <td th:text="${#dates.format(game.endDate, 'MM/dd/yyyy HH:mm:ss')}"></td>
                 <td id="action">
                     <button th:onclick="'location.href=\'/game/' + ${game.id} + '\';'">Play</button>
                     <button th:onclick="'deleteGame(' + ${game.id} + ');'">Delete</button>
