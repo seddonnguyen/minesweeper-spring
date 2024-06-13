@@ -41,13 +41,13 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
-    public void createUser(RegisterRequest signUpRequest) {
+    public void createUser(RegisterRequest registerRequest) {
         User user = new User();
-        user.setUsername(signUpRequest.getUsername());
-        user.setEmail(signUpRequest.getEmail());
-        user.setFirstName(signUpRequest.getFirstname());
-        user.setLastName(signUpRequest.getLastname());
-        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setUsername(registerRequest.getUsername());
+        user.setEmail(registerRequest.getEmail());
+        user.setFirstName(registerRequest.getFirstname());
+        user.setLastName(registerRequest.getLastname());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setEnabled(true);
         user.setRole(Role.PLAYER);
         userRepository.save(user);

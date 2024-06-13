@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*",
              maxAge = 3600)
 @RestController
-@RequestMapping("/api/auth")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -39,9 +38,8 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("/signin")
+    @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
                                                                                                                    loginRequest.getPassword()));
 
@@ -58,27 +56,37 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
     }
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest signUpRequest) {
-        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
+    @GetMapping("/register")
+    public String register() {
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterRequest registerRequest) {
+        if(userRepository.existsByUsername(registerRequest.getUsername())) {
             return ResponseEntity.badRequest()
                                  .body(new MessageResponse("Error: Username is already taken!"));
         }
 
-        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if(userRepository.existsByEmail(registerRequest.getEmail())) {
             return ResponseEntity.badRequest()
                                  .body(new MessageResponse("Error: Email is already in use!"));
         }
 
         User user = new User();
-        user.setUsername(signUpRequest.getUsername());
-        user.setEmail(signUpRequest.getEmail());
-        user.setFirstName(signUpRequest.getFirstname());
-        user.setLastName(signUpRequest.getLastname());
-        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setUsername(registerRequest.getUsername());
+        user.setEmail(registerRequest.getEmail());
+        user.setFirstName(registerRequest.getFirstname());
+        user.setLastName(registerRequest.getLastname());
+        user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         user.setEnabled(true);
 
-        String strRole = signUpRequest.getRole();
+        String strRole = registerRequest.getRole();
 
         if(strRole == null) { strRole = "PLAYER"; }
         Role role = Role.valueOf(strRole);
