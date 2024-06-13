@@ -40,7 +40,7 @@ public class GameController {
     @GetMapping
     public String getActiveGame(Model model) {
         model.addAttribute("games", gameService.getActiveGame(username));
-        return "games";
+        return "save-game";
     }
 
     @GetMapping("/")

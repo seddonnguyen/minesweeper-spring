@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Minesweeper</title>
+    <link rel="stylesheet" th:href="@{/css/save-game.css}">
+</head>
+<body>
+<section>
+    <h1>Minesweeper</h1>
+    <div class="tbl-header">
+        <table>
+            <thead>
+            <tr>
+                <th>Difficulty</th>
+                <th>Status</th>
+                <th>Last Played</th>
+                <th></th>
+            </tr>
+            </thead>
+        </table>
+    </div>
+    <div class="tbl-content">
+        <table>
+            <tbody>
+            <tr th:each="game : ${games}">
+                <td th:text="${#strings.capitalize(#strings.toLowerCase(game.difficulty))}"></td>
+                <td th:text="${game.gameNew ? 'New Game' : (game.gameInProgress ? 'In Progress' : (game.gameWon ? 'Won' : 'Lost'))}"></td>
+                <td th:text="${game.endDate}"></td>
+                <td id="action">
+                    <button th:onclick="'location.href=\'/game/' + ${game.id} + '\';'">Play</button>
+                    <button th:onclick="'deleteGame(' + ${game.id} + ');'">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+            <script th:src="@{/js/save-game.js}"></script>
+        </table>
+    </div>
+</section>
+</body>
+</html>
