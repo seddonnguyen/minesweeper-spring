@@ -1,0 +1,50 @@
+
+:root {
+    --primary-color: #f9a826;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.raleway-medium {
+    font-family: "Raleway", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+}
+
+html, body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100vw;
+    height: calc(100vh - 13rem);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+    background: hsla(170, 50%, 3%, 1);
+}
+
+.title {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    margin: -5.5vw 0 0 0;
+    z-index: 100;
+    font-size: 10vw;
+    color: var(--primary-color);
+    line-height: 1;
+}
+
+@media screen and (min-width: 200rem) {
+    body {
+        height: 100vh;
+        justify-content: center;
+    }
+}
