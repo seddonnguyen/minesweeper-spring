@@ -50,17 +50,13 @@ h1 {
 /* Layout */
 .screen {
     display: flex;
+    position: fixed;
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
     padding: 10px;
     min-width: 375px;
     width: 100%;
-}
-
-.container {
-    display: grid;
-    place-content: center;
 }
 
 /* Buttons */
