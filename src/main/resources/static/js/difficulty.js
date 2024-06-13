@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const playButton = document.getElementById('playButton');
     const difficulty = document.getElementById('difficulty');
+    const loadGameButton = document.getElementById('loadGameButton');
 
     async function createGame(difficulty) {
         const response = await fetch(`/game?difficulty=${difficulty}`, {
@@ -29,5 +30,23 @@ document.addEventListener('DOMContentLoaded', () => {
             playButton.disabled = false;
             playButton.textContent = 'Play';
         }
+    });
+
+
+    function redirect(eventButton, buttonText, path) {
+        try {
+            eventButton.disabled = true;
+            eventButton.textContent = 'Loading...';
+            window.location.replace(path);
+        } catch (error) {
+            console.error('Error redirecting:', error);
+        } finally {
+            eventButton.disabled = false;
+            eventButton.textContent = buttonText;
+        }
+    }
+
+    loadGameButton.addEventListener('click', () => {
+        redirect(loadGameButton, 'Load Game', '/game');
     });
 });

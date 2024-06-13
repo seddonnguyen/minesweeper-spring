@@ -1,18 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,300,700&display=swap');
-/* Base styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-body {
-    width: 100vw;
-    height: 100vh;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-}
 
 /* Color variables */
 :root {
@@ -22,6 +8,26 @@ body {
     --hover-color: #f7971e;
     --button-text-color: #1e1e1e;
     --fade-in-duration: 0.5s;
+}
+
+/* Base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+*:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.3) 3rem, rgba(255, 255, 255, 0.2) 3rem);
 }
 
 /* Typography */
@@ -121,4 +127,151 @@ select::-ms-expand {
     to {
         opacity: 1;
     }
+}
+
+
+body .menu {
+    position: fixed;
+    height: 100vh;
+    width: 30vw;
+    top: 0;
+    left: 35vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    transform: scale(0.6) translateY(30px);
+    opacity: 0;
+}
+
+body .page-content-wrapper {
+    position: fixed;
+    z-index: 2;
+    transition: transform 0.5s ease-in-out;
+    width: 100%;
+    height: 100%;
+}
+
+body .page-content-wrapper:before, body .page-content-wrapper:after {
+    content: '';
+    display: block;
+    position: fixed;
+    top: -10vh;
+    height: 120vh;
+    width: 60vw;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    z-index: 0;
+    transition: transform 0.5s ease-in-out, box-shadow 0.5s ease-in-out;
+}
+
+body .page-content-wrapper:before {
+    left: -10vw;
+}
+
+body .page-content-wrapper:after {
+    right: -10vw;
+}
+
+body .page-content-wrapper .page-content {
+    position: relative;
+    z-index: 1;
+    transition: opacity 0.25s ease-in-out;
+    padding: 20px 40px 80px 40px;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+body .page-content-wrapper .page-content img {
+    width: 30vw;
+    height: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+body .page-content-wrapper .page-content img:nth-of-type(odd) {
+    float: left;
+    margin-right: 20px;
+}
+
+body .page-content-wrapper .page-content img:nth-of-type(even) {
+    float: right;
+    margin-left: 20px;
+}
+
+body #menu-toggle, body #menu-toggle + label {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: block;
+    height: 40px;
+    width: 40px;
+}
+
+body #menu-toggle {
+    opacity: 0;
+}
+
+body #menu-toggle + label {
+    transition: transform 0.5s ease-in-out;
+}
+
+body #menu-toggle + label .fas {
+    font-weight: 100;
+    font-size: 35px;
+    position: absolute;
+    display: flex;
+    height: 40px;
+    width: 40px;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+body #menu-toggle + label .fas.fa-times {
+    opacity: 0;
+}
+
+
+body #menu-toggle:checked + label {
+    transform: rotate(180deg);
+}
+
+body #menu-toggle:checked + label .fas.fa-times {
+    opacity: 1;
+}
+
+body #menu-toggle:checked + label .fas.fa-bars {
+    opacity: 0;
+}
+
+body #menu-toggle:checked ~ .page-content-wrapper {
+    pointer-events: none;
+    transform: scale(1.5);
+}
+
+body #menu-toggle:checked ~ .page-content-wrapper:before, body #menu-toggle:checked ~ .page-content-wrapper:after {
+    box-shadow: 0 0 10px black;
+}
+
+body #menu-toggle:checked ~ .page-content-wrapper:before {
+    transform: translateX(-15vw);
+}
+
+body #menu-toggle:checked ~ .page-content-wrapper:after {
+    transform: translateX(15vw);
+}
+
+body #menu-toggle:checked ~ .page-content-wrapper .page-content {
+    opacity: 0;
+}
+
+body #menu-toggle:checked ~ .menu {
+    transform: scale(1) translateY(0px);
+    opacity: 1;
 }

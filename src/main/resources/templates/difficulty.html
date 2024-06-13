@@ -5,19 +5,33 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Minesweeper</title>
     <link rel="stylesheet" th:href="@{/css/difficulty.css}">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/0786c5feec.js"></script>
 </head>
 <body>
-
-<div class="screen">
-    <h1>Minesweeper</h1>
-    <div id="instructions">
-        <select id="difficulty">
-            <option th:each="difficulty : ${difficulties}"
-                    th:text="${difficulty}"
-                    th:value="${difficulty}">Difficulty
-            </option>
-        </select>
-        <button id="playButton">Play</button>
+<input id="menu-toggle" type="checkbox">
+<label for="menu-toggle">
+    <i aria-hidden="true" class="fas fa-times"></i>
+    <i aria-hidden="true" class="fas fa-bars"></i>
+</label>
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="screen">
+            <h1>Minesweeper</h1>
+            <div id="instructions">
+                <select id="difficulty">
+                    <option th:each="difficulty : ${difficulties}"
+                            th:text="${difficulty}"
+                            th:value="${difficulty}">Difficulty
+                    </option>
+                </select>
+                <button id="playButton">Play</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="menu">
+    <div id="controls">
+        <button id="loadGameButton">Game History</button>
     </div>
 </div>
 <script th:src="@{/js/difficulty.js}" type="module"></script>

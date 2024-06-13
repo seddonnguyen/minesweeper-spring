@@ -1,27 +1,4 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500,300,700&display=swap');
-/* Base styles */
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', sans-serif;
-}
-
-*, *:before, *:after {
-    box-sizing: border-box;
-}
-
-body {
-    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.3) 3rem, rgba(255, 255, 255, 0.2) 3rem);
-}
-
-body {
-    width: 100vw;
-    height: 100vh;
-    color: var(--text-color);
-    background-color: var(--bg-color);
-    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.3) 3rem, rgba(255, 255, 255, 0.2) 3rem);
-}
 
 /* Color variables */
 :root {
@@ -38,6 +15,26 @@ body {
     --status-bg-color: #333;
     --status-text-color: #f0f0f0;
     --fade-in-duration: 0.5s;
+}
+
+/* Base styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', sans-serif;
+}
+
+*:before, *:after {
+    box-sizing: border-box;
+}
+
+body {
+    width: 100vw;
+    height: 100vh;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    background-image: linear-gradient(to left, rgba(255, 255, 255, 0.3) 3rem, rgba(255, 255, 255, 0.2) 3rem);
 }
 
 /* Typography */
