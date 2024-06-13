@@ -2,6 +2,7 @@ package com.tringuyen.minesweeper.controller;
 
 import com.tringuyen.minesweeper.model.Cell;
 import com.tringuyen.minesweeper.service.CellService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,7 @@ public class BoardController {
     private final CellService cellService;
     private final String username = "admin";
 
+    @Autowired
     public BoardController(CellService cellService) {
         this.cellService = cellService;
     }

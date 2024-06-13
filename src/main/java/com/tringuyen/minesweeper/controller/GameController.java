@@ -4,6 +4,7 @@ import com.tringuyen.minesweeper.model.Difficulty;
 import com.tringuyen.minesweeper.model.Game;
 import com.tringuyen.minesweeper.payload.request.ElapsedTimeRequest;
 import com.tringuyen.minesweeper.service.GameService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ public class GameController {
     private final String username = "admin";
     private final GameService gameService;
 
+    @Autowired
     public GameController(GameService gameService) { this.gameService = gameService; }
 
     @PostMapping
