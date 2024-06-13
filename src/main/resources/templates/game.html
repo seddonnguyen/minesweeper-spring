@@ -4,34 +4,43 @@
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Minesweeper</title>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/0786c5feec.js"></script>
     <link rel="stylesheet" th:href="@{/css/game.css}">
 </head>
 <body>
+<input id="menu-toggle" type="checkbox">
+<label for="menu-toggle">
+    <i aria-hidden="true" class="fas fa-times"></i>
+    <i aria-hidden="true" class="fas fa-bars"></i>
+</label>
+<div class="page-content-wrapper">
+    <div class="page-content">
+        <div class="screen" id="gameScreen">
+            <div id="gameStatus"></div>
+            <div id="gameBoard">
+                <canvas id="gameCanvas"></canvas>
+            </div>
+        </div>
 
-<div class="screen" id="gameScreen">
-    <div id="gameStatus"></div>
-    <div id="gameBoard">
-        <canvas id="gameCanvas"></canvas>
-        <div id="controls">
-            <button id="restartButton">Restart</button>
-            <button id="menu2Button">Back to Games</button>
+        <div class="modal hidden" id="gameOverModal">
+            <div class="modal-content">
+                <div id="gameInfo">
+                    <h2 id="gameOverHeader"></h2>
+                    <p id="gameOverMessage"></p>
+                    <p id="gameOverTime"></p>
+                    <button id="closeGameOverModal">Close</button>
+                </div>
+            </div>
         </div>
     </div>
 </div>
-
-<div class="modal hidden" id="gameOverModal">
-    <div class="modal-content">
-        <p class="close" id="closeGameOverModal">&times;</p>
-        <div id="gameInfo">
-            <h2 id="gameOverHeader"></h2>
-            <p id="gameOverMessage"></p>
-            <p id="gameOverTime"></p>
-            <button id="newGameButton">New Game</button>
-            <button id="menuButton">Back to Games</button>
-        </div>
+<div class="menu">
+    <div id="controls">
+        <button id="newGameButton">New Game</button>
+        <button id="restartButton">Restart</button>
+        <button id="loadGameButton">Load Game</button>
     </div>
 </div>
-
 <script th:inline="javascript">
     /*<![CDATA[*/
     var gameData = /*[[${game}]]*/ {};

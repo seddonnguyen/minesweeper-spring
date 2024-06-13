@@ -9,8 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameOverHeader = document.getElementById('gameOverHeader');
     const gameOverMessage = document.getElementById('gameOverMessage');
     const gameOverTime = document.getElementById('gameOverTime');
-    const menuButton = document.getElementById('menuButton');
-    const menu2Button = document.getElementById('menu2Button');
+    const loadGameButton = document.getElementById('loadGameButton');
     const newGameButton = document.getElementById('newGameButton');
     const restartButton = document.getElementById('restartButton');
     const mineImg = new Image();
@@ -372,16 +371,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    menuButton.addEventListener('click', () => {
-        redirect(menuButton, 'Back to Games', '/game');
-    });
-
-    menu2Button.addEventListener('click', () => {
-        redirect(menuButton, 'Back to Games', '/game');
+    loadGameButton.addEventListener('click', () => {
+        redirect(loadGameButton, 'Load Game', '/game');
     });
 
     newGameButton.addEventListener('click', () => {
-        redirect(menuButton, 'New Game', '/game/');
+        redirect(newGameButton, 'New Game', '/game/');
     });
 
     closeGameOverModal.addEventListener('click', () => {
