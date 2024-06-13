@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
     const tblContent = document.querySelector('.tbl-content');
     const tblHeader = document.querySelector('.tbl-header');
+    const mainGameButton = document.getElementById('mainGameButton');
     const newGameButton = document.getElementById('newGameButton');
 
     const adjustTableHeaderPadding = () => {
@@ -24,6 +25,10 @@ document.addEventListener('DOMContentLoaded', () => {
             eventButton.textContent = buttonText;
         }
     }
+
+    mainGameButton.addEventListener('click', () => {
+        redirect(mainGameButton, 'Main', '/');
+    });
 
     newGameButton.addEventListener('click', () => {
         redirect(newGameButton, 'New Game', '/game/');

@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameOverHeader = document.getElementById('gameOverHeader');
     const gameOverMessage = document.getElementById('gameOverMessage');
     const gameOverTime = document.getElementById('gameOverTime');
+    const mainGameButton = document.getElementById('mainGameButton');
     const loadGameButton = document.getElementById('loadGameButton');
     const newGameButton = document.getElementById('newGameButton');
     const restartButton = document.getElementById('restartButton');
@@ -371,8 +372,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    mainGameButton.addEventListener('click', () => {
+        redirect(mainGameButton, 'Main', '/');
+    });
+
     loadGameButton.addEventListener('click', () => {
-        redirect(loadGameButton, 'Load Game', '/game');
+        redirect(loadGameButton, 'Game History', '/game');
     });
 
     newGameButton.addEventListener('click', () => {

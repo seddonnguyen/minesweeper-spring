@@ -19,6 +19,7 @@ class Animation {
         };
     }
 
+
     rand = (n) => n * Math.random();
 
     fadeInOut = (t, m) => {
@@ -43,6 +44,11 @@ class Animation {
             height: 100%;
         `;
         this.container.appendChild(this.canvas.b);
+    }
+
+    deleteCanvas() {
+        this.container = document.getElementsByTagName('canvas');
+        this.container[0].remove();
     }
 
     resize() {
@@ -197,13 +203,37 @@ class Animation {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
+    const loadGameButton = document.getElementById('loadGameButton');
+    const newGameButton = document.getElementById('newGameButton');
     const pipeAnimation = new Animation();
     pipeAnimation.createCanvas();
     pipeAnimation.setup();
+
+    function redirect(eventButton, buttonText, path) {
+        try {
+            eventButton.disabled = true;
+            eventButton.textContent = 'Loading...';
+            window.location.replace(path);
+        } catch (error) {
+            console.error('Error redirecting:', error);
+        } finally {
+            eventButton.disabled = false;
+            eventButton.textContent = buttonText;
+        }
+    }
+
+    loadGameButton.addEventListener('click', () => {
+        redirect(loadGameButton, 'Load Game', '/game');
+    });
+
+    newGameButton.addEventListener('click', () => {
+        redirect(newGameButton, 'New Game', '/game/');
+    });
 });
 
 window.addEventListener('resize', () => {
     const pipeAnimation = new Animation();
+    pipeAnimation.deleteCanvas();
     pipeAnimation.createCanvas();
     pipeAnimation.setup();
 });

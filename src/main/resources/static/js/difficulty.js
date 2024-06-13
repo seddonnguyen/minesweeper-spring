@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const playButton = document.getElementById('playButton');
     const difficulty = document.getElementById('difficulty');
+    const mainGameButton = document.getElementById('mainGameButton');
     const loadGameButton = document.getElementById('loadGameButton');
 
     async function createGame(difficulty) {
@@ -46,7 +47,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    mainGameButton.addEventListener('click', () => {
+        redirect(mainGameButton, 'Main', '/');
+    });
+
     loadGameButton.addEventListener('click', () => {
-        redirect(loadGameButton, 'Load Game', '/game');
+        redirect(loadGameButton, 'Game History', '/game');
     });
 });

@@ -91,6 +91,7 @@ button {
     border-radius: 8px;
     transition: all 0.2s;
     margin: .25rem;
+    width: 12rem;
 }
 
 button:hover {
@@ -126,6 +127,10 @@ button:hover::after {
     justify-content: center;
     align-items: center;
     gap: 1rem;
+}
+
+#action button {
+    width: 6rem;
 }
 
 @keyframes fadeIn {
