@@ -20,10 +20,10 @@ public class User {
     private Long id;
 
     @NonNull
-    private String firstname;
+    private String firstName;
 
     @NonNull
-    private String lastname;
+    private String lastName;
 
     @Column(unique = true)
     @Email
@@ -37,7 +37,7 @@ public class User {
     @NonNull
     private String password;
 
-    private boolean enabled = true;
+    private boolean enabled;
 
     @Enumerated(EnumType.STRING)
     @NonNull
