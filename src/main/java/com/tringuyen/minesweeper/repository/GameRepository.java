@@ -17,8 +17,8 @@ import java.util.Optional;
 public interface GameRepository extends JpaRepository<Game, Long> {
     Optional<List<Game>> findByUser(User user);
 
-    @Query("SELECT g FROM Game g WHERE g.user = :user AND g.state IN :gameStates")
-    List<Game> findByUserAndGameStates(@Param("user") User user, @Param("gameStates") List<GameState> gameStates);
+    @Query("SELECT g FROM Game g WHERE g.user = :user ORDER BY g.endDate DESC")
+    List<Game> findByUserOrderByEndDateDesc(@Param("user") User user);
 
     @Transactional
     @Modifying
