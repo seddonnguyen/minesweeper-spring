@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<div class="screen" id="startScreen">
+<div class="screen">
     <h1>Minesweeper</h1>
     <div id="instructions">
         <select id="difficulty">
@@ -20,23 +20,6 @@
         <button id="playButton">Play</button>
     </div>
 </div>
-
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var gameData = /*[[${game}]]*/ {};
-    var mineImgSrc = /*[[@{/images/mine.svg}]]*/ '';
-    var flagImgSrc = /*[[@{/images/flag.svg}]]*/ '';
-    var invalidImgSrc = /*[[@{/images/invalid.svg}]]*/ '';
-    var startGameSoundSrc = /*[[@{/sounds/start-game.mp3}]]*/ '';
-    var explosionSoundSrc = /*[[@{/sounds/explosion.mp3}]]*/ '';
-    var smallExplosionSoundSrc = /*[[@{/sounds/small-explosion.mp3}]]*/ '';
-    var victorySoundSrc = /*[[@{/sounds/victory.mp3}]]*/ '';
-    var flagSoundSrc = /*[[@{/sounds/flag.mp3}]]*/ '';
-    var openSoundSrc = /*[[@{/sounds/open.mp3}]]*/ '';
-    var selectSoundSrc = /*[[@{/sounds/select.mp3}]]*/ '';
-    var closeSoundSrc = /*[[@{/sounds/close.mp3}]]*/ '';
-    /*]]>*/
-</script>
 <script th:src="@{/js/difficulty.js}" type="module"></script>
 </body>
 </html>

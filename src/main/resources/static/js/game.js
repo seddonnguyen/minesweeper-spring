@@ -11,17 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameOverTime = document.getElementById('gameOverTime');
     const menuButton = document.getElementById('menuButton');
     const menu2Button = document.getElementById('menu2Button');
+    const newGameButton = document.getElementById('newGameButton');
     const restartButton = document.getElementById('restartButton');
     const mineImg = new Image();
     const flagImg = new Image();
     const invalidImg = new Image();
 
-    // Use the injected paths
     mineImg.src = mineImgSrc;
     flagImg.src = flagImgSrc;
     invalidImg.src = invalidImgSrc;
 
-    let game = window.gameData;  // Retrieve the game data from the embedded JSON
+    let game = window.gameData;
     let board = game ? game.board : null;
     let cells = board ? board.cells : [];
     let cellSize;
@@ -61,7 +61,6 @@ document.addEventListener('DOMContentLoaded', () => {
             sounds.flag = await loadSound(flagSoundSrc);
             sounds.open = await loadSound(openSoundSrc);
             sounds.select = await loadSound(selectSoundSrc);
-            sounds.close = await loadSound(closeSoundSrc);
         } catch (error) {
             console.error('Error loading sounds:', error);
         }
@@ -139,10 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cell && !cell.hidden) {return;}
 
         try {
-            revealPosition(game.id, row, col).then((gameData) => {
+            revealPosition(game.id, row, col).then(gameData => {
                 if (gameData === null) {return;}
                 game = gameData;
-                board = gameData.board;
+                board = game.board;
                 cells = board.cells;
 
                 playSound(findCell(row, col).exploded ? sounds.smallExplosion : sounds.open);
@@ -181,10 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (cell && !cell.hidden && !cell.flagged) {return;}
 
         try {
-            toggleFlag(game.id, row, col).then((gameData) => {
+            toggleFlag(game.id, row, col).then(gameData => {
                 if (gameData === null) {return;}
                 game = gameData;
-                board = gameData.board;
+                board = game.board;
                 cells = board.cells;
 
                 playSound(sounds.flag);
@@ -360,24 +359,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    function redirect(eventButton, buttonText, path) {
+        try {
+            eventButton.disabled = true;
+            eventButton.textContent = 'Loading...';
+            window.location.replace(path);
+        } catch (error) {
+            console.error('Error redirecting:', error);
+        } finally {
+            eventButton.disabled = false;
+            eventButton.textContent = buttonText;
+        }
+    }
+
     menuButton.addEventListener('click', () => {
-        window.location.href = '/game';
+        redirect(menuButton, 'Back to Games', '/game');
     });
 
     menu2Button.addEventListener('click', () => {
-        window.location.href = '/game';
+        redirect(menuButton, 'Back to Games', '/game');
+    });
+
+    newGameButton.addEventListener('click', () => {
+        redirect(menuButton, 'New Game', '/game/');
     });
 
     closeGameOverModal.addEventListener('click', () => {
-        playSound(sounds.close);
         gameOverModal.classList.add('hidden');
     });
 
     restartButton.addEventListener('click', () => {
-        removeGame(game.id).then(() => {
-            newGame(game.difficulty).then((game) => {
-                location.replace('/game/' + game.id);
+        try {
+            restartButton.disabled = true;
+            restartButton.textContent = 'Loading...';
+            removeGame(game.id).then(() => {
+                newGame(game.difficulty).then((game) => {
+                    window.location.replace('/game/' + game.id);
+                });
             });
-        });
+        } catch (error) {
+            alert('Failed to restart the game. Please try again.');
+            console.error('Error restarting game:', error);
+        } finally {
+            restartButton.disabled = false;
+            restartButton.textContent = 'Restart';
+        }
     });
 });

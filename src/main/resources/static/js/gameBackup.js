@@ -56,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         sounds.flag = await loadSound('sounds/flag.mp3');
         sounds.open = await loadSound('sounds/open.mp3');
         sounds.select = await loadSound('sounds/select.mp3');
-        sounds.close = await loadSound('sounds/close.mp3');
     };
 
     initSounds().catch(console.error);
@@ -353,7 +352,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     closeGameOverModal.addEventListener('click', () => {
-        playSound(sounds.close);
         gameOverModal.classList.add('hidden');
     });
 
