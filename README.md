@@ -8,7 +8,7 @@ Discover the excitement of Minesweeper! Immerse yourself in an engaging web-base
 - 🔊 **Immersive Sound Effects:** Engaging audio effects intensify the experience, adding excitement to every move.
 - 📏 **Customize Your Challenge:** Whether you're a Minesweeper beginner or a pro, choose the perfect game setting to match your skill level.
 - ⏱️ **Game Timer:** Test your speed and agility with the in-game timer. Challenge yourself to beat your best time with each electrifying round.
-- 💖 **Lives:** Strategize and make every move count! You start with 3 lives, and every wrong move costs you a life. The thrill intensifies as you strive to avoid the mines and outlast your opponents.
+- 💖 **Lives:** Get ready to strategize and make every move count! With 3 lives at the start, every wrong move deducts a life. The thrill intensifies as you navigate to avoid the mines. Ready for the challenge?
 - 💾 **Saved Games:** Never lose your progress! Save your games and resume your epic Minesweeper journey at your convenience. The excitement continues from where you left off.
 - 📱 **Responsive Design:** Seamlessly switch between devices and savor uninterrupted gameplay. Whether it's on your trusty desktop or your handheld device, the Minesweeper adventure never stops.
 - 🔄 **Reset Button:** Never back down from a challenge! Hit the reset button and dive back into the action with just one click. The exhilarating adventure begins anew, ready to test your skills and wits once more!
