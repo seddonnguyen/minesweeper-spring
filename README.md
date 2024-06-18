@@ -5,7 +5,8 @@ Discover the excitement of Minesweeper! Immerse yourself in an engaging web-base
 
 ## 🚀 Features
 - 🎮 Classic Gameplay: Immerse yourself in the timeless Minesweeper experience, reminiscent of nostalgic gaming moments.
-- 📏 Customizable Grid: Tailor your challenge by choosing your preferred grid size and difficulty level. Whether you're a beginner or a Minesweeper pro, customize the game to match your skill level.
+- 🔊 Immersive Sound Effects**: Engaging audio effects intensify the experience, adding excitement to every move.
+- 📏 Customize Your Challenge: Whether you're a Minesweeper beginner or a pro, choose the perfect game setting to match your skill level.
 - ⏱️ Game Timer: Test your speed and agility with the in-game timer. Challenge yourself to beat your best time with each electrifying round.
 - 💖 Lives: Strategize and make every move count! You start with 3 lives, and every wrong move costs you a life. The thrill intensifies as you strive to avoid the mines and outlast your opponents.
 - 💾 Saved Games: Never lose your progress! Save your games and resume your epic Minesweeper journey at your convenience. The excitement continues from where you left off.
