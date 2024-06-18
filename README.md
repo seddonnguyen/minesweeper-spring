@@ -22,6 +22,8 @@ Discover the excitement of Minesweeper! Immerse yourself in an engaging web-base
   - [![MySQL](https://img.shields.io/badge/MySQL-%234479A1.svg?style=flat&logo=mysql&logoColor=white)](https://www.mysql.com/)
 - **ORM:**
   - [![Hibernate](https://img.shields.io/badge/Hibernate-%23992774.svg?style=flat&logo=hibernate&logoColor=white)](https://hibernate.org/)
+- **Template Engine**
+  - [![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005F0F?style=flat&logo=thymeleaf&logoColor=white)](https://www.thymeleaf.org/)
 - **Web Technologies:** 
   - [![HTML5](https://img.shields.io/badge/HTML5-%23E34F26.svg?style=flat&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
   - [![CSS3](https://img.shields.io/badge/CSS3-%231572B6.svg?style=flat&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
