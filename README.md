@@ -1,6 +1,4 @@
 # Minesweeper
-
-## Overview
 Discover the excitement of Minesweeper! Immerse yourself in an engaging web-based Minesweeper game, powered by Spring. It's an ideal choice for individuals who appreciate a combination of strategic thinking and enjoyment!
 
 ![Minesweeper Demo](minesweeper-demo.gif)
@@ -47,10 +45,9 @@ Discover the excitement of Minesweeper! Immerse yourself in an engaging web-base
    ```bash
    ./mvnw spring-boot:run
    ```
-## 🌟 Usage
-**To Start the Game**: Simply open your web browser and go to http://localhost:8080 to kick off the fun!
+5. **To Start the Game**: Simply open your web browser and go to http://localhost:8080 to kick off the fun!
 
-**Gameplay Instructions**:
+## Gameplay Instructions
 - **Objective**: Your mission is to clear the grid without setting off any mines.
 - **Controls**: Left-click to reveal a cell and right-click to flag a mine.
 - **Indicators**: Keep an eye on the numbers, they indicate how many mines are adjacent to a cell.
@@ -64,8 +61,7 @@ Here are some pro tips to take your game to the next level:
 - **Play it Safe**: Want to uncover those safe zones? Start with the corners or edges for a better shot at revealing larger safe areas. You've got this!
 
 ## Contributing
-We welcome contributions to enhance the Minesweeper game! Whether it's bug fixes, new features, or improvements, your contributions are valuable. Here’s how you can contribute:
-
+I'd love your help to improve the Minesweeper game! Whether it's bug fixes, new features, or enhancements, your contributions are incredibly valuable. Let's make Minesweeper even better together! Here’s how you can contribute:
 1. **Fork the Repository**: Create a personal copy of the repository.
 2. **Create a Branch**: Make a new branch for your changes.
    ```bash
@@ -86,6 +82,6 @@ We welcome contributions to enhance the Minesweeper game! Whether it's bug fixes
 This project is licensed under the MIT License, making it free to use and modify. See the [LICENSE](https://github.com/seddonnguyen/minesweeper-spring/blob/main/LICENSE) file for details.
 
 ## Contact
-Your engagement is important to us. Feel free to contact me with any questions or feedback by opening an issue on the repository. Your input is highly valued.
+Your engagement is important to me. Please feel free to reach out with any questions or feedback by opening an issue on the repository. Your input is highly valued.
 
 Enjoy playing Minesweeper and happy coding!
